@@ -2,7 +2,8 @@
 name: researcher
 description: Web researcher — searches the web and synthesizes findings
 tools: web_search, web_fetch, safe_bash
-model: openrouter/z-ai/glm-5.3
+# model: nvidia/moonshotai/kimi-k3
+model: deepseek/deepseek-v4-flash
 thinking: medium
 system-prompt: append
 auto-exit: true

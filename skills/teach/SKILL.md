@@ -74,7 +74,7 @@ The two principles are *how* you teach. This is *when* — the shape of a teachi
 
 The tool already tells you to keep options even. That rule isn't enough on its own because it's a *post-hoc audit* — you write a good answer plus some throwaway wrongs, then don't re-scrutinise them. The tell is baked in before any check runs. So don't audit afterwards; **build the options so evenness is automatic**:
 
-1. **Every option is a bare claim — no justification anywhere.** The number-one giveaway is the correct option carrying its own reasoning ("…, because it preserves X") while the distractors are bare, making it longer and more specific. Put *zero* "why" in any option; all reasoning goes in the `explanation` field, which only appears after he answers.
+1. **Every option is a bare claim — no justification anywhere.** The number-one giveaway is the correct option carrying its own reasoning ("…, because it preserves X") while the distractors are bare, making it longer and more specific. Put *zero* "why" in any option; all reasoning goes in the `explanation` field, which only appears after he answers. (One current form of this: jamming a multi-line code sample into an option because you were explaining it. Keep option code to a single line, per the formatting section.)
 2. **Write the correct claim first, then mutate it into each distractor.** Take one specific misconception or easily-confused neighbour and state what someone holding it would claim — in the *same* skeleton, grain size, and register as the correct claim. Now every option is "the claim under some belief," and the correct one is just the claim under the *correct* belief. Parallelism falls out by construction instead of being policed.
 3. Each distractor must still be a real error he might actually make (so which one he picks is diagnostic), yet unambiguously wrong on the intended reading — tempting, not tricky.
 4. **No asymmetric bolding.** Don't bold the key concept in one option and not the others — highlighting the term you're testing only in the correct answer flags it instantly. Either bold nothing, or bold the parallel term in every option.
@@ -144,3 +144,24 @@ Everything written in a session is rendered to him through Obsidian, which rende
 - Centered display math: `$$` fenced on its own lines, e.g. `$$\n f(x) \n$$`
 
 If LaTeX can be used, it should be. Write $f(x) = x^2$, not `f(x) = x^2`.
+
+## Formatting — code renders as Markdown code, not LaTeX
+
+Programming identifiers, literals, and expressions are **code**, not math. Obsidian renders them completely differently, and mistaking one for the other is the usual cause of ugly output. So the LaTeX rule above applies to *actual math only* — it does not apply to code. Three things decide which:
+
+- **Inline token → single backticks.** Any identifier, variable, function name, method, library, command, or short literal is inline code: wrap it in one backtick. `` `map` ``, `` `x = 5` ``, `` `PyTorch` ``, `` `str` `` → clean inline code spans. **Do not write code as `$...$`.** Dollar-sign math renders with math italic font and extra spacing, which turns `x` into what reads as a math variable, not a program variable.
+- **Multi-line sample → fenced code block.** Anything spanning more than one line gets a fenced block with a language tag, and is fine in explanations:
+  ```text
+  def f(x):
+      return x + 1
+  ```
+- **A backtick inside the code → double-backtick fence.** If a snippet itself needs a literal backtick, wrap it in two backticks instead of one: ``` `` ``file` was run`` ``` renders as ``` ``file` was run``` under a clean inline span. (Applies to template literals, shell commands, etc.)
+
+**Quiz options in particular:** keep any code a *single-line inline snippet*, never a multiline block. `` `x = x + 1` `` in an option is fine; a 3-line snippet is not. If the correct claim genuinely needs multiple lines of code, the claim is too heavy for an option — test a smaller one instead. Do this *as part of step 1 in the quiz-option procedure below* (reshape the claim into a one-liner while writing it, not as a cleanup after).
+
+## Formatting — tool output is invisible, so embed it in the message
+
+The procedure is in `~/.pi/agent/AGENTS.md` ("Every run you rely on gets pasted — never just referenced"). In a teaching session it is not optional, because the pasted run *is* the evidence the lesson rests on; he reads the lesson in Obsidian, and what I run with `bash`/tools never reaches the file. Two teaching-specific additions to that procedure:
+
+- **Annotate inline where the result is the point**, e.g. `` `same cell shared: True  # the key evidence` ``, so his eye lands on the decisive line instead of decoding the whole block.
+- **Quiz `details` code must also use fenced blocks** (```` ```python ````) so it renders as a code block in Obsidian, not plain text. Keep option *labels* to short single-line claims.
